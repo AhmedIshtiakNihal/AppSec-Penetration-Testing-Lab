@@ -8,17 +8,17 @@ on:
 jobs:
   semgrep:
     runs-on: ubuntu-latest
+    container:
+      image: semgrep/semgrep
     steps:
       - uses: actions/checkout@v4
-      - uses: returntocorp/semgrep-action@v1
-        with:
-          config: semgrep.yml
+      - run: semgrep scan --config semgrep.yml --error
 
   dependency-scan:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: aquasecurity/trivy-action@0.20.0
+      - uses: aquasecurity/trivy-action@master
         with:
           scan-type: fs
           scan-ref: .
